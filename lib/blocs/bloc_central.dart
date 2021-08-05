@@ -1,13 +1,13 @@
-import 'package:contratame/blocs/bloc_provider.dart';
-import 'package:contratame/blocs/bloc_theme.dart';
-import 'package:contratame/widgets/action_bottom_button_widget.dart';
-import 'package:contratame/widgets/menu_app_bar_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../helpers.dart';
 import '../modules/users/blocs/bloc_users.dart';
 import '../services/service_http.dart';
 import '../services/service_shared_preferences.dart';
+import '../widgets/action_bottom_button_widget.dart';
+import '../widgets/menu_app_bar_widget.dart';
+import 'bloc_provider.dart';
+import 'bloc_theme.dart';
 
 class BlocCentral {
   /// This class acts like main bloc of app
@@ -100,9 +100,10 @@ class BlocCentral {
   /// projector display controlers
   ///
   /// Interceptor for back button
-  back(){
+  back() {
     BlocProvider().back();
   }
+
   ///
   ///
   set alert(Widget? alertWidget) {
