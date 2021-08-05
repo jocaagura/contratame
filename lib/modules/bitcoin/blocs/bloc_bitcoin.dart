@@ -34,7 +34,12 @@ class BlocBitcoin {
 
 
 
-
+  double returnUSDtoCopValue(double value) {
+    return value * 3917.0;
+  }
+  double returnUSDtoEURValue(double value) {
+    return value * 0.84;
+  }
 
 
   dispose(){

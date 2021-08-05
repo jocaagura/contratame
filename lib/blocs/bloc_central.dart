@@ -192,4 +192,12 @@ class BlocCentral {
   bool ckeckPolicyAccsess(String acceso) {
     return true;
   }
+
+
+
+
+  /// text formating
+  String returnMoneyFormat(String valor){
+    return Helpers().returnMoneyFormat(valor);
+  }
 }

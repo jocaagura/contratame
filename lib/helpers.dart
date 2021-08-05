@@ -1,36 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class Helpers{
+class Helpers {
   /// helpers multipurpose
   static final Helpers _helpers = Helpers._internal();
-  factory Helpers(){
+
+  factory Helpers() {
     return _helpers;
   }
 
-  Helpers._internal(){
+  Helpers._internal() {
     print('test made for Albert J. Jiménez P.');
   }
 
   /// [validateUrl] checks if the url has a correct format
 
-  bool validateUrl(String url){
+  bool validateUrl(String url) {
     if (url == "") {
       return false;
     }
     Pattern pattern = r'^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$';
     RegExp regExp = new RegExp(pattern as String);
     bool tmp = false;
-    try{
-      tmp =  regExp.hasMatch(url);
-    }catch(e){}
+    try {
+      tmp = regExp.hasMatch(url);
+    } catch (e) {}
 
     return tmp;
   }
 
-
   /// [validateEmail] checks true if email address have a correct format
-  bool validateEmail(String email){
+  bool validateEmail(String email) {
     if (email == "") {
       return false;
     }
@@ -38,14 +38,40 @@ class Helpers{
         r'^([a-z0-9-_.])+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regExp = new RegExp(pattern as String);
     bool tmp = false;
-    try{
+    try {
       tmp = regExp.hasMatch(email);
-    }catch(e){}
+    } catch (e) {}
     return tmp;
   }
 
+  /// formating
+  /// money format
+  /// Devolver formato moneda
+  String returnMoneyFormat(String valor) {
+    String moneda = "\$";
+    String numero = "";
+    int? tmp = double.tryParse(valor)?.toInt();
+    if (tmp == null) {
+      return '\$0';
+    }
+    final number = valor.split('.');
+    final decimals = number[1];
+    final integer = number[0];
+    int check = 0;
+    for (int i = integer.length - 1; i >= 0; i--) {
+      if (check != 0) {
+        if (check % 6 == 0) {
+          numero = "'" + numero;
+        } else if (check % 3 == 0) {
+          numero = "." + numero;
+        }
+      }
 
-
+      check++;
+      numero = integer[i] + numero;
+    }
+    return moneda + numero + ',' + decimals;
+  }
 
   /// Icon data
   /// returns icondata
