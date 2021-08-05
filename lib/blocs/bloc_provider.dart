@@ -254,8 +254,7 @@ class BlocProvider {
     if (loadingMessage != '') {
       return;
     }
-    print(historial);
-    print(alert);
+
     if (alert != null) {
       alert = null;
       return;
@@ -263,7 +262,8 @@ class BlocProvider {
 
     removePage(historial.last);
     clearBottomMenu();
-
+    print(historial);
+    print(alert);
   }
 
   factory BlocProvider() {

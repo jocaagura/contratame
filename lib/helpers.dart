@@ -152,6 +152,7 @@ class Helpers{
     'fecha': FontAwesomeIcons.calendar,
     'error': Icons.error,
     'go': Icons.arrow_forward_ios,
+    'godown': Icons.keyboard_arrow_down,
     // Mensajería
     'mapa': FontAwesomeIcons.locationArrow,
     'reloj': FontAwesomeIcons.clock,

@@ -9,7 +9,9 @@ class AlertProjectorWidget extends StatelessWidget {
     return StreamBuilder<Widget?>(
         stream: BlocCentral().alertStream,
         builder: (context, snapshot) {
+
           if (snapshot.data != null) {
+            print(snapshot.data);
             return snapshot.data!;
           }
           return Container(

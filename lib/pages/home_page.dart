@@ -27,6 +27,12 @@ class HomePage extends StatelessWidget {
             texto: 'Test users api',
             onTap: () {
               BlocCentral().addPage('HomeUserPage', HomeUserPage());
+            }),
+        FatButtonJocaagura(
+            icono: BlocCentral().returnIcondata('go'),
+            texto: 'Test alert',
+            onTap: () {
+              BlocCentral().generalAlert('Hola', 'Hola, esta es una alerta personalizada');
             })
       ],
     );
