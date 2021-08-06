@@ -30,8 +30,7 @@ class ServiceHttp {
         if (response.statusCode == 200 || response.statusCode == 201) {
           if(response.data.runtimeType == String){
             tmpMap = jsonDecode(response.data);
-          }
-          if (response.data is Map<String, dynamic>) {
+          }else if (response.data is Map<String, dynamic>) {
             tmpMap = response.data;
           }
         }

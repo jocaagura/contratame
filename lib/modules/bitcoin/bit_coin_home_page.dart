@@ -1,11 +1,12 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:contratame/modules/bitcoin/blocs/bloc_bitcoin.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../blocs/bloc_central.dart';
 import '../../widgets/blueprint_home_widget.dart';
+import 'blocs/bloc_bitcoin.dart';
 import 'models/model_bitcoin_resume.dart';
+import 'pages/day_detail_page.dart';
 
 class BitCoinHomePage extends StatelessWidget {
   const BitCoinHomePage({Key? key}) : super(key: key);
@@ -25,6 +26,31 @@ class BitCoinHomePage extends StatelessWidget {
         if (snapshot.hasData) {
           final modelBitcoin = ModelBitcoin.fromJson(snapshot.data!);
           final contenido = <Widget>[];
+
+          /// each 60 seconds query
+          contenido.add(FadeInLeft(
+            duration: Duration(milliseconds: 450),
+            child: ListTile(
+              onTap: () {
+                BlocBitcoin().subscribeBitcoinTodayInfo();
+                BlocCentral().addPage('DayDetailBPIPage', DayDetailBPIPage());
+              },
+              tileColor: BlocCentral().theme.backgroundColor,
+              leading: Icon(
+                BlocCentral().returnIcondata('calendario'),
+                color: BlocCentral().theme.cardColor,
+              ),
+              trailing: Icon(
+                BlocCentral().returnIcondata('go'),
+                color: BlocCentral().theme.cardColor,
+              ),
+              title: Text('Consulta diaria del bitcoin',
+                  style: textStyleTitulo.copyWith(color: Colors.orangeAccent)),
+              subtitle: Text('Ver el detallado del dia',
+                  style:
+                      textStyleSubTitulo.copyWith(color: Colors.orangeAccent)),
+            ),
+          ));
 
           /// add the main part and disclaimer
           contenido.add(FadeInLeft(
@@ -66,12 +92,17 @@ class BitCoinHomePage extends StatelessWidget {
               duration: Duration(milliseconds: 450),
               child: ListTile(
                 onTap: () {
-                  final inCOP = BlocBitcoin().returnUSDtoCopValue(value).toStringAsFixed(2);
-                  final inEUR = BlocBitcoin().returnUSDtoEURValue(value).toStringAsFixed(2);
-                  BlocCentral().generalAlert('Detalle',
+                  final inCOP = BlocBitcoin()
+                      .returnUSDtoCopValue(value)
+                      .toStringAsFixed(2);
+                  final inEUR = BlocBitcoin()
+                      .returnUSDtoEURValue(value)
+                      .toStringAsFixed(2);
+                  BlocCentral().generalAlert(
+                      'Detalle',
                       'Para el $key\nEl valor en USD fue de ${BlocCentral().returnMoneyFormat(value.toStringAsFixed(2))}\n'
-                      'El valor calculado aprox en COP fue de ${BlocCentral().returnMoneyFormat(inCOP)}\n'
-                      'El valor calculado aprox en EUR fue de EUR ${BlocCentral().returnMoneyFormat(inEUR)}');
+                          'El valor calculado aprox en COP fue de ${BlocCentral().returnMoneyFormat(inCOP)}\n'
+                          'El valor calculado aprox en EUR fue de EUR ${BlocCentral().returnMoneyFormat(inEUR)}');
                 },
                 tileColor: BlocCentral().theme.backgroundColor,
                 leading: Icon(
@@ -83,12 +114,15 @@ class BitCoinHomePage extends StatelessWidget {
                   color: BlocCentral().theme.cardColor,
                 ),
                 title: Text('$key', style: textStyleTitulo),
-                subtitle: Text('USD ${BlocCentral().returnMoneyFormat(value.toStringAsFixed(4))}', style: textStyleSubTitulo),
+                subtitle: Text(
+                    'USD ${BlocCentral().returnMoneyFormat(value.toStringAsFixed(4))}',
+                    style: textStyleSubTitulo),
               ),
             ));
           });
 
           return BlueprintHomeSliver(
+            asset: 'assets/bitcoin/bitcoin.png',
             titulo: 'Resumen de las ultimas dos semanas',
             listaItems: contenido,
           );
