@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../enums.dart';
 import 'bloc_central.dart';
 
 class BlocTheme {
@@ -71,7 +72,7 @@ class BlocTheme {
 
   Size? sizeControl;
   double sizeDrawer = 100.0;
-  int modoDisplay = 1;
+  ModoDisplay modoDisplay = ModoDisplay.movil;
 
   /// setters and getters
   set theme(ThemeData themeTmp) {
@@ -84,37 +85,34 @@ class BlocTheme {
   }
 
   set size(Size? sizeTmp) {
-    /// establecemos el tamaño de la aplicacion
-
-    if (sizeTmp != sizeControl) {
+    /// Set the size of app only if is different
+    if (sizeTmp != sizeControl && sizeTmp != null && sizeControl != null) {
       sizeControl = sizeTmp;
 
-      /// limite del tamaño del drawer
+      /// limit drawer size
       final double limiteDrawer = 250;
       sizeDrawer = 100.0;
-      modoDisplay = 1;
-      if (sizeTmp!.width > 500) {
-        /// Restringimos el tamaño del ancho para las aplicaciones
-        /// Mientras se realiza el trabajo de diseño liquido.
-
+      modoDisplay = ModoDisplay.movil;
+      if (sizeTmp.width > 500) {
+        /// Constraint for size.with
         sizeDrawer = sizeTmp.width - 600;
         if (sizeDrawer > 300) {
           sizeDrawer = 300;
         }
         sizeTmp = Size(sizeTmp.width - sizeDrawer, sizeTmp.height);
         if (sizeDrawer > limiteDrawer) {
-          modoDisplay = 2;
+          modoDisplay = ModoDisplay.tablet;
         } else if (sizeControl!.aspectRatio > 0.65 ||
             sizeControl!.aspectRatio < 0.5) {
-          modoDisplay = 3;
+          modoDisplay = ModoDisplay.desktop;
         }
       }
 
       /// Para tv y pantalla grande
       if (sizeTmp.width > 1900) {
-        modoDisplay = 4;
+        modoDisplay = ModoDisplay.tv;
       }
-      if (modoDisplay == 1) {
+      if (modoDisplay == ModoDisplay.movil) {
         sizeTmp = sizeControl;
       }
       sizeControl = sizeTmp;

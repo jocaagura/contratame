@@ -11,9 +11,7 @@ class BlocBitcoin {
   /// Singleton pattern
   static final BlocBitcoin _blocBitcoin = BlocBitcoin._internal();
 
-  factory BlocBitcoin() {
-    return _blocBitcoin;
-  }
+  factory BlocBitcoin() => _blocBitcoin;
 
   BlocBitcoin._internal() {
     /// All of initial checks will be here and
@@ -41,16 +39,12 @@ class BlocBitcoin {
   getTodayBitcoinInfo([String moneyCode = 'COP']) async {
     final url = 'https://api.coindesk.com/v1/bpi/currentprice/$moneyCode.json';
     final json = await BlocCentral().jsonGetRequestHttp(url: url);
-    ModelBitcoinOnlyDay? modelBitcoinOnlyDayTmp;
     try {
-      print(json);
-
-      modelBitcoinOnlyDayTmp = ModelBitcoinOnlyDay.fromJson(json);
+      modelBitcoinOnlyDay = ModelBitcoinOnlyDay.fromJson(json);
     } catch (e) {
       print('Error');
-      print(e);
+      modelBitcoinOnlyDay = null;
     }
-    modelBitcoinOnlyDay = modelBitcoinOnlyDayTmp;
   }
 
   set bitcoinInfo(ModelBitcoin? bitcoinInfo) {
@@ -81,7 +75,6 @@ class BlocBitcoin {
       timerQueryBitCoinOnlyDay = null;
     }
     timerQueryBitCoinOnlyDay = Timer.periodic(Duration(seconds: 60), (timer) {
-      print('consultando bitcoin ${timer.tick}');
       getTodayBitcoinInfo();
     });
   }

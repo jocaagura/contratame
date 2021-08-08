@@ -7,76 +7,73 @@ import '../blocs/bloc_central.dart';
 
 class BotonAccionInferior extends StatelessWidget {
   const BotonAccionInferior(
-      {this.duracion = 1200,
-      this.ancho,
-      this.icono,
+      {this.duration = 1200,
+      this.width,
+      this.icon,
       this.label,
-      this.funcion,
-      this.enfasis = false});
+      this.function,
+      this.emphasize = false});
 
-  final double? ancho;
-  final int duracion;
-  final IconData? icono;
+  final double? width;
+  final int duration;
+  final IconData? icon;
   final String? label;
-  final Function? funcion;
-  final bool enfasis;
+  final Function? function;
+  final bool emphasize;
 
   @override
   Widget build(BuildContext context) {
-    double? ancho2 = 80.0;
+    double finalWidth = 80.0;
 
-    ancho2 = BlocCentral().size.width / BlocCentral().size.aspectRatio * 0.1;
-
-    if (ancho != null) {
-      ancho2 = ancho;
-    }
+    finalWidth = width ??
+        BlocCentral().size.width / BlocCentral().size.aspectRatio * 0.1;
 
     return InkWell(
-      onTap: funcion as void Function()? ?? null,
+      onTap: function as void Function()? ?? null,
       child: Container(
-        margin: EdgeInsets.all(ancho2! * 0.05),
-        width: ancho2 * 0.9,
-        height: ancho2 * 0.9,
+        margin: EdgeInsets.all(finalWidth * 0.05),
+        width: finalWidth * 0.9,
+        height: finalWidth * 0.9,
         decoration: BoxDecoration(
-            color: enfasis
+            color: emphasize
                 ? BlocCentral().theme.primaryColorDark
                 : BlocCentral().theme.buttonColor,
-            borderRadius: BorderRadius.circular(ancho2 * 0.1)),
+            borderRadius: BorderRadius.circular(finalWidth * 0.1)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(),
             Container(
               alignment: Alignment.center,
-              width: ancho2 * 0.4,
-              height: ancho2 * 0.4,
+              width: finalWidth * 0.4,
+              height: finalWidth * 0.4,
               child: ZoomIn(
-                duration: Duration(milliseconds: duracion),
-                delay: Duration(milliseconds: (duracion * 0.5).toInt()),
+                duration: Duration(milliseconds: duration),
+                delay: Duration(milliseconds: (duration * 0.5).toInt()),
                 child: FaIcon(
-                  icono ?? BlocCentral().returnIcondata('ayuda'),
-                  color: enfasis == true
+                  icon ?? BlocCentral().returnIcondata('ayuda'),
+                  color: emphasize == true
                       ? BlocCentral().theme.canvasColor
                       : Theme.of(context).accentColor,
-                  size: ancho2 * 0.375,
+                  size: finalWidth * 0.375,
                 ),
               ),
             ),
             BounceInUp(
-              duration: Duration(milliseconds: duracion),
+              duration: Duration(milliseconds: duration),
               child: ZoomIn(
-                duration: Duration(milliseconds: duracion),
+                duration: Duration(milliseconds: duration),
                 child: Container(
-                  width: ancho2 * 0.86,
-                  height: ancho2 * 0.2,
+                  width: finalWidth * 0.86,
+                  height: finalWidth * 0.2,
                   child: AutoSizeText(
-                    label ?? 'inactivo',
+                    label ?? 'inactive',
                     maxLines: 2,
                     textAlign: TextAlign.center,
                     minFontSize: 5.0,
                     style: TextStyle(
                         fontSize: 30.0,
-                        color: enfasis == true
+                        color: emphasize == true
                             ? BlocCentral().theme.canvasColor
                             : Theme.of(context).accentColor,
                         fontWeight: FontWeight.bold),

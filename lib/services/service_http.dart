@@ -11,9 +11,7 @@ class ServiceHttp {
   /// Singleton pattern
   static final ServiceHttp _serviceHttp = ServiceHttp._internal();
 
-  factory ServiceHttp() {
-    return _serviceHttp;
-  }
+  factory ServiceHttp() => _serviceHttp;
 
   ServiceHttp._internal() {
     /// All of initial checks will be here and
@@ -25,17 +23,18 @@ class ServiceHttp {
     Map<String, dynamic> tmpMap = {};
     final dio = Dio();
     try {
+      /// BlocCentral is singleton class we wouldn't a new instance Here
       if (BlocCentral().validateUrl(url)) {
         final response = await dio.get(url, queryParameters: parameters);
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          if(response.data.runtimeType == String){
-            tmpMap = jsonDecode(response.data);
-          }else if (response.data is Map<String, dynamic>) {
-            tmpMap = response.data;
-          }
+        if (response.data.runtimeType == String) {
+          tmpMap = jsonDecode(response.data);
+        } else if (response.data is Map<String, dynamic>) {
+          tmpMap = response.data;
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      tmpMap = {};
+    }
     return tmpMap;
   }
 
@@ -44,18 +43,19 @@ class ServiceHttp {
     Map<String, dynamic> tmpMap = {};
     final dio = Dio();
     try {
+      /// BlocCentral is singleton class we wouldn't a new instance Here
       if (BlocCentral().validateUrl(url)) {
         final response = await dio.post(url, queryParameters: parameters);
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          if(response.data.runtimeType == String){
-            tmpMap = jsonDecode(response.data);
-          }
-          if (response.data is Map<String, dynamic>) {
-            tmpMap = response.data;
-          }
+        if (response.data.runtimeType == String) {
+          tmpMap = jsonDecode(response.data);
+        }
+        if (response.data is Map<String, dynamic>) {
+          tmpMap = response.data;
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      tmpMap = {};
+    }
     return tmpMap;
   }
 }

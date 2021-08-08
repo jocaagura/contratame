@@ -35,5 +35,12 @@ void main() {
     expect(Helpers().validateEmail('a\$@anonimo.co'), false);
     expect(Helpers().validateEmail('#a@anonimo.co'), false);
     expect(Helpers().validateEmail(''), false);
+
+    expect(Helpers().returnMoneyFormat('1000'), '\$1.000,00');
+    expect(Helpers().returnMoneyFormat('1000', 0), '\$1.000');
+    expect(Helpers().returnMoneyFormat('1\'0.00', 0), '\$0');
+    expect(Helpers().returnMoneyFormat('1\'0.00', 2), '\$0');
+
+
   });
 }

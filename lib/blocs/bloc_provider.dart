@@ -231,12 +231,12 @@ class BlocProvider {
 
   generalAlert(String titulo, String mensaje, [IconData? icono]) {
     alert = AlertWidget(
-      titulo: titulo,
-      contenido: Container(
+      title: titulo,
+      contentWidget: Container(
         alignment: Alignment.center,
         child: AutoSizeText(mensaje),
       ),
-      iconoTitulo: icono,
+      iconTitle: icono,
     );
   }
 
@@ -250,20 +250,21 @@ class BlocProvider {
     backFunction.remove(key);
   }
 
-  back() {
+  Future<bool> back() async{
     if (loadingMessage != '') {
-      return;
+      return false;
     }
 
     if (alert != null) {
       alert = null;
-      return;
+      return false;
     }
 
     removePage(historial.last);
     clearBottomMenu();
     print(historial);
     print(alert);
+    return false;
   }
 
   factory BlocProvider() {

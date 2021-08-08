@@ -12,14 +12,12 @@ class MenuAppInferior extends StatelessWidget {
         stream: BlocCentral().actionButtonsStream,
         builder: (BuildContext context,
             AsyncSnapshot<Map<String, BotonAccionInferior>?> snapshot) {
-          if (snapshot.data == null || snapshot.data!.length == 0) {
-            return Container(
-              width: 1.0,
-              height: 1.0,
-            );
-          }
-
-          return MenuInferiorGeneral();
+          return BlocCentral().actionButtons.length == 0
+              ? Container(
+                  width: 1.0,
+                  height: 1.0,
+                )
+              : MenuInferiorGeneral();
         });
   }
 }

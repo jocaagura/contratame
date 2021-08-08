@@ -15,7 +15,9 @@ class UserCreateEditFormPage extends StatefulWidget {
 class _UserCreateEditFormPageState extends State<UserCreateEditFormPage> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final BlocCentral _blocCentral = BlocCentral();
+
+    final size = _blocCentral.size;
     final TextStyle titleStyle = TextStyle(
         color: Colors.blue,
         fontFamily: 'fjalla',
@@ -141,7 +143,7 @@ class _UserCreateEditFormPageState extends State<UserCreateEditFormPage> {
               _InputFormField(
                 label: 'Email:',
                 callback: (value) {
-                  if (value != null && BlocCentral().validateEmail(value)) {
+                  if (value != null && _blocCentral.validateEmail(value)) {
                     BlocUsers().user = ModelUser(
                       firstName: BlocUsers().user?.firstName ?? '',
                       lastName: BlocUsers().user?.lastName ?? '',
@@ -160,7 +162,7 @@ class _UserCreateEditFormPageState extends State<UserCreateEditFormPage> {
                     return 'Escribe una direccion de correo valida';
                   }
 
-                  if (!BlocCentral().validateEmail(value)) {
+                  if (!_blocCentral.validateEmail(value)) {
                     return 'Escribe una direccion de correo valida';
                   }
                   return null;

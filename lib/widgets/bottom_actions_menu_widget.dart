@@ -6,18 +6,19 @@ import '../blocs/bloc_central.dart';
 class MenuInferiorGeneral extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final BlocCentral _blocCentral = BlocCentral();
     return Positioned(
       bottom: 4.0,
-      left: BlocCentral().size.width * 0.05,
+      left: _blocCentral.size.width * 0.05,
       child: FadeInUp(
         duration: Duration(milliseconds: 800),
         child: ZoomIn(
           duration: Duration(milliseconds: 800),
           child: Container(
-            width: BlocCentral().size.width * 0.9,
-            height: BlocCentral().size.height * 0.1,
+            width: _blocCentral.size.width * 0.9,
+            height: _blocCentral.size.height * 0.1,
             decoration: BoxDecoration(
-                color: BlocCentral().theme.accentColor.withOpacity(0.25),
+                color: _blocCentral.theme.accentColor.withOpacity(0.25),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15.0),
                   topRight: Radius.circular(15.0),
@@ -27,7 +28,7 @@ class MenuInferiorGeneral extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 mainAxisSize: MainAxisSize.max,
-                children: BlocCentral().actionButtons.values.toList(),
+                children: _blocCentral.actionButtons.values.toList(),
               ),
             ),
           ),

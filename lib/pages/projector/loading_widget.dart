@@ -3,23 +3,20 @@ import 'package:flutter/material.dart';
 import '../../blocs/bloc_central.dart';
 import '../../pages/loading_page.dart';
 
-/// pantalla de procesamiento
+/// process Screen
 class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final BlocCentral _blocCentral = BlocCentral();
+
     return StreamBuilder<String?>(
-        stream: BlocCentral().loadingStream,
+        stream: _blocCentral.loadingStream,
         builder: (context, snapshot) {
-          if (snapshot.data != null) {
-            if (snapshot.data != '') {
-              BlocCentral().processLoad = true;
-              return LoadingPage();
-            } else {
-              BlocCentral().processLoad = false;
-            }
-          } else {
-            BlocCentral().processLoad = false;
+          if (snapshot.data?.isNotEmpty == true) {
+            _blocCentral.processLoad = true;
+            return LoadingPage();
           }
+          _blocCentral.processLoad = false;
           return Container(width: 1.0, height: 1.0);
         });
   }

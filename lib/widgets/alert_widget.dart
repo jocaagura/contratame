@@ -8,16 +8,16 @@ import '../blocs/bloc_central.dart';
 class AlertWidget extends StatelessWidget {
   const AlertWidget(
       {this.okButton = 'Ok !!',
-      this.funcionLabel = '',
-      this.iconoTitulo,
-      this.contenido,
-      this.titulo = 'Alerta'});
+      this.functionLabel = '',
+      this.iconTitle,
+      this.contentWidget,
+      this.title = 'Alerta'});
 
   final String okButton;
-  final String funcionLabel;
-  final String titulo;
-  final Widget? contenido;
-  final IconData? iconoTitulo;
+  final String functionLabel;
+  final String title;
+  final Widget? contentWidget;
+  final IconData? iconTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class AlertWidget extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
         ),
 
-        /// Fondo del alerta
+        /// Background
         FadeInDown(
           duration: Duration(milliseconds: 750),
           child: Container(
@@ -50,7 +50,7 @@ class AlertWidget extends StatelessWidget {
                 )),
             child: Stack(
               children: [
-                /// Encabezado
+                /// Header
                 FadeInDown(
                   duration: Duration(milliseconds: 1000),
                   delay: Duration(milliseconds: 200),
@@ -69,7 +69,7 @@ class AlertWidget extends StatelessWidget {
                           height: alto * 0.1,
                           width: ancho * 0.2,
                           child: FaIcon(
-                            iconoTitulo ?? FontAwesomeIcons.exclamationTriangle,
+                            iconTitle ?? FontAwesomeIcons.exclamationTriangle,
                             color: Theme.of(context).primaryColor,
                           ),
                         ),
@@ -78,7 +78,7 @@ class AlertWidget extends StatelessWidget {
                           width: ancho * 0.725,
                           alignment: Alignment.centerLeft,
                           child: AutoSizeText(
-                            titulo,
+                            title,
                             minFontSize: 6.0,
                             maxFontSize: 18.0,
                             maxLines: 2,
@@ -89,7 +89,7 @@ class AlertWidget extends StatelessWidget {
                   ),
                 ),
 
-                /// Contenedor del contenido
+                /// Content container
                 FadeInDown(
                   duration: Duration(milliseconds: 1000),
                   delay: Duration(milliseconds: 500),
@@ -109,12 +109,12 @@ class AlertWidget extends StatelessWidget {
                       width: ancho * 0.88,
                       height: alto * 0.65,
                       color: Theme.of(context).backgroundColor,
-                      child: contenido,
+                      child: contentWidget,
                     ),
                   ),
                 ),
 
-                /// Acciones
+                /// Actions
                 Container(
                   width: ancho * 0.9,
                   height: alto * 0.125,
@@ -130,7 +130,7 @@ class AlertWidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      funcionLabel == ''
+                      functionLabel == ''
                           ? Container(
                               alignment: Alignment.center,
                               height: alto * 0.11,
@@ -162,7 +162,7 @@ class AlertWidget extends StatelessWidget {
                                       width: 1.0,
                                     )),
                                 child: AutoSizeText(
-                                  funcionLabel,
+                                  functionLabel,
                                   minFontSize: 8,
                                   maxFontSize: 18,
                                   maxLines: 2,

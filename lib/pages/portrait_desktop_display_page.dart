@@ -6,7 +6,7 @@ class PortraitDesktopDisplayPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Landing page\ndisplayModo: Modo 3 Desktop'),
+      child: Text('Landing page\ndisplayModo: Modo Desktop'),
     );
   }
 }

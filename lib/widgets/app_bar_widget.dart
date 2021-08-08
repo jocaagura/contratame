@@ -6,20 +6,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../blocs/bloc_central.dart';
 import 'menu_app_bar_widget.dart';
 
-class AppBarWidget extends StatefulWidget {
-  final Map<String, MenuAppBarItem>? menuAcciones;
+class AppBarWidget extends StatelessWidget {
+  const AppBarWidget({Key? key}) : super(key: key);
 
-  const AppBarWidget({
-    this.menuAcciones,
-  });
-
-  @override
-  _AppBarWidgetState createState() => _AppBarWidgetState();
-}
-
-class _AppBarWidgetState extends State<AppBarWidget> {
   @override
   Widget build(BuildContext context) {
+
     double ancho = BlocCentral().size.width * 0.2;
     List<MenuAppBarItem> contenido = [];
     Widget contenido2 = Container(
@@ -42,11 +34,10 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       contenido = <MenuAppBarItem>[];
 
       // Agregamos las funciones recibidas en la clase si las hay
-      if (widget.menuAcciones != null) {
-        widget.menuAcciones!.entries.forEach((element) {
+       BlocCentral().menuItems.entries.forEach((element) {
           contenido.insert(0, element.value);
         });
-      }
+
 
       contenido2 = ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(alto * 0.5)),
@@ -94,9 +85,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                   borderRadius: BorderRadius.all(Radius.circular(alto * 0.5)),
                   child: RawMaterialButton(
                     onPressed: () {
-                      setState(() {
                         BlocCentral().switchDrawer();
-                      });
                     },
                     child: Container(
                       width: anchoMenu,

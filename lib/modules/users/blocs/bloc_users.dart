@@ -9,14 +9,9 @@ class BlocUsers {
   /// Singleton pattern
   static final BlocUsers _blocUsers = BlocUsers._internal();
 
-  factory BlocUsers() {
-    return _blocUsers;
-  }
+  factory BlocUsers() => _blocUsers;
 
-  BlocUsers._internal() {
-    /// All of initial checks will be here and
-    /// will be executed once
-  }
+  BlocUsers._internal();
 
   /// for observables in realtime database com
   final _userListController = BehaviorSubject<List<ModelUser>>();
@@ -52,7 +47,7 @@ class BlocUsers {
 
   /// NETWORK methods
   Future<List<ModelUser>> listUsers({int page = 1, int perPage = 12}) async {
-    final List<ModelUser> tmpList = [];
+    List<ModelUser> tmpList = [];
     try {
       final tempData = await BlocCentral().jsonGetRequestHttp(
           url: _kUrlBase,
@@ -64,7 +59,9 @@ class BlocUsers {
           tmpList.add(tmpUser);
         } catch (e) {}
       }
-    } catch (e) {}
+    } catch (e) {
+      tmpList = [];
+    }
     return tmpList;
   }
 
@@ -73,23 +70,23 @@ class BlocUsers {
     if (tmp != null) {
       return tmp;
     }
-    ModelUser tmp2 = ModelUser(
-      firstName: "firstName",
-      lastName: "lastName",
-      email: "email@email.co",
-      avatar: 'https://jocaagura.github.io/hvalbertjimenez/img/joao.jpg',
-      id: id,
-    );
+    late ModelUser tmp2;
 
     try {
       final tempData = await BlocCentral()
           .jsonGetRequestHttp(url: _kUrlBase, parameters: {'id': "$id"});
       final data = tempData["data"];
-      try {
-        final tmp2 = ModelUser.fromJson(data);
-        await insertNewUserInSQL(tmp2);
-      } catch (e) {}
-    } catch (e) {}
+      final tmp2 = ModelUser.fromJson(data);
+      await insertNewUserInSQL(tmp2);
+    } catch (e) {
+      tmp2 = ModelUser(
+        firstName: "firstName",
+        lastName: "lastName",
+        email: "email@email.co",
+        avatar: 'https://jocaagura.github.io/hvalbertjimenez/img/joao.jpg',
+        id: id,
+      );
+    }
 
     return tmp2;
   }
@@ -114,11 +111,9 @@ class BlocUsers {
   }
 
   Future<ModelUser> insertNewUserInSQL(ModelUser modelUser) async {
-    if (modelUser.sqlId == null) {
-      return await ServiceUsersSQL().createModelUser(modelUser);
-    }
-
-    return modelUser;
+    return modelUser.sqlId == null
+        ? await ServiceUsersSQL().createModelUser(modelUser)
+        : modelUser;
   }
 
   dispose() {

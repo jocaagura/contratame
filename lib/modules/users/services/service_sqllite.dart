@@ -6,12 +6,9 @@ import '../models/model_users.dart';
 class ServiceUsersSQL {
   static final ServiceUsersSQL _serviceSQL = ServiceUsersSQL._internal();
 
-  factory ServiceUsersSQL() {
-    return _serviceSQL;
-  }
+  factory ServiceUsersSQL() => _serviceSQL;
 
   ServiceUsersSQL._internal();
-
 
   static Database? _database;
 

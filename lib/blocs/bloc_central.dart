@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../enums.dart';
 import '../helpers.dart';
 import '../modules/users/blocs/bloc_users.dart';
 import '../services/service_http.dart';
@@ -86,7 +87,7 @@ class BlocCentral {
 
   ThemeData get theme => BlocTheme().theme;
 
-  int get displayModo => BlocTheme().modoDisplay;
+  ModoDisplay get displayModo => BlocTheme().modoDisplay;
 
   Size get size => BlocTheme().size;
 
@@ -100,8 +101,8 @@ class BlocCentral {
   /// projector display controlers
   ///
   /// Interceptor for back button
-  back() {
-    BlocProvider().back();
+  Future<bool> back() async{
+    return BlocProvider().back();
   }
 
   ///
@@ -193,11 +194,8 @@ class BlocCentral {
     return true;
   }
 
-
-
-
   /// text formating
-  String returnMoneyFormat(String valor){
+  String returnMoneyFormat(String valor) {
     return Helpers().returnMoneyFormat(valor);
   }
 }

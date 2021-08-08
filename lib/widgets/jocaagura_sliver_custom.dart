@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class JocaaguraSliverCustomHeaderDelegate
     extends SliverPersistentHeaderDelegate {
-  final double minAlto;
-  final double maxAlto;
+  final double minHeight;
+  final double maxHeight;
   final Widget child;
 
   JocaaguraSliverCustomHeaderDelegate(
-      {required this.minAlto, required this.maxAlto, required this.child});
+      {required this.minHeight, required this.maxHeight, required this.child});
 
   @override
   Widget build(
@@ -18,15 +18,15 @@ class JocaaguraSliverCustomHeaderDelegate
   }
 
   @override
-  double get maxExtent => (maxAlto < minAlto) ? minAlto : maxAlto;
+  double get maxExtent => (maxHeight < minHeight) ? minHeight : maxHeight;
 
   @override
-  double get minExtent => minAlto;
+  double get minExtent => minHeight;
 
   @override
   bool shouldRebuild(JocaaguraSliverCustomHeaderDelegate oldDelegate) {
-    return maxAlto != oldDelegate.maxAlto ||
-        minAlto != oldDelegate.minAlto ||
+    return maxHeight != oldDelegate.maxHeight ||
+        minHeight != oldDelegate.minHeight ||
         child != oldDelegate.child;
   }
 }

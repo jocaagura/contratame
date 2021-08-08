@@ -16,21 +16,21 @@ class HomePage extends StatelessWidget {
       listaItems: [
         /// todo: create autation for inverse injection for home page pages
         FatButtonJocaagura(
-            icono: BlocCentral().returnIcondata('money'),
-            texto: 'Test Bitcoin api',
+            icon: BlocCentral().returnIcondata('money'),
+            label: 'Test Bitcoin api',
             onTap: () {
               /// Rout to bit coin api
               BlocCentral().addPage('BitCoinHomePage', BitCoinHomePage());
             }),
         FatButtonJocaagura(
-            icono: BlocCentral().returnIcondata('go'),
-            texto: 'Test users api',
+            icon: BlocCentral().returnIcondata('go'),
+            label: 'Test users api',
             onTap: () {
               BlocCentral().addPage('HomeUserPage', HomeUserPage());
             }),
         FatButtonJocaagura(
-            icono: BlocCentral().returnIcondata('go'),
-            texto: 'Test alert',
+            icon: BlocCentral().returnIcondata('go'),
+            label: 'Test alert',
             onTap: () {
               BlocCentral().generalAlert('Hola', 'Hola, esta es una alerta personalizada');
             })

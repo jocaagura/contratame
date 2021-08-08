@@ -6,7 +6,7 @@ class LandscapeTabletDisplayPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Landing page\ndisplayModo: Modo 2'),
+      child: Text('Landing page\ndisplayModo: Modo tablet'),
     );
   }
 }

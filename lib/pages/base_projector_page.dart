@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../pages/home_page.dart';
 import '../blocs/bloc_central.dart';
 
-/// proyector de navegación para la aplicación
+/// projector base
 class BaseProyector extends StatelessWidget {
   const BaseProyector();
 
@@ -13,12 +13,8 @@ class BaseProyector extends StatelessWidget {
     return StreamBuilder<Map<String, Widget>?>(
         stream: BlocCentral().navigatorMapStream,
         builder: (context, snapshot) {
-          Widget? pagina = HomePage();
-          if (snapshot.data != null) {
-            if (snapshot.data!.length > 0) {
-              pagina = snapshot.data![BlocCentral().historial.last];
-            }
-          }
+          Widget? pagina =
+              snapshot.data?[BlocCentral().historial.last] ?? HomePage();
           return FadeIn(
             duration: Duration(milliseconds: 400),
             child: Container(

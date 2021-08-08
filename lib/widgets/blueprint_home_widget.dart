@@ -42,8 +42,8 @@ class BlueprintHomeSliver extends StatelessWidget {
           SliverPersistentHeader(
               floating: true,
               delegate: JocaaguraSliverCustomHeaderDelegate(
-                  minAlto: BlocCentral().size.height * 0.1,
-                  maxAlto: BlocCentral().size.height * 0.3,
+                  minHeight: BlocCentral().size.height * 0.1,
+                  maxHeight: BlocCentral().size.height * 0.3,
                   child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(

@@ -38,7 +38,7 @@ class FondoWidget extends StatelessWidget {
             : SvgProyectorWidget(
                 svgasset: svgasset!,
               ),
-        TitleStackWidget(titulo: titulo),
+        TitleStackWidget(title: titulo),
         Container(width: BlocCentral().size.width, height: alto, child: child),
         BlocCentral().areButtonsIntoBottomMenu()
             ? Positioned(

@@ -1,71 +1,64 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:contratame/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../blocs/bloc_central.dart';
 
 class FatButtonJocaagura extends StatefulWidget {
-  final IconData? icono;
-  final String? texto;
-  final Color? color1;
-  final Color? color2;
+  final IconData? icon;
+  final String? label;
+  final Color? primaryColor;
+  final Color? accentColor;
   final Function onTap;
-  final String? rutaSonido;
-  final double? anchoBoton;
-  final String? acceso;
+  final String? soundAssetsRoute;
+  final double? buttonWidth;
+  final String? securityAccessKey;
 
   const FatButtonJocaagura(
-      {required this.icono,
-      required this.texto,
+      {required this.icon,
+      required this.label,
       required this.onTap,
-      this.color1,
-      this.color2,
-      this.rutaSonido,
-      this.anchoBoton,
-      this.acceso});
+      this.primaryColor,
+      this.accentColor,
+      this.soundAssetsRoute,
+      this.buttonWidth,
+      this.securityAccessKey});
 
   @override
   _FatButtonJocaaguraState createState() => _FatButtonJocaaguraState();
 }
 
 class _FatButtonJocaaguraState extends State<FatButtonJocaagura> {
-  double? ancho;
-  double? anchoInicial;
-  double? alto;
+  double aspectRatio = 1 / 3.03;
+
+  @override
+  void initState() {
+    super.initState();
+    aspectRatio = 1 / 3.03;
+  }
 
   @override
   Widget build(BuildContext context) {
-    String acceso = widget.acceso ?? '';
-    if (BlocCentral().ckeckPolicyAccsess(acceso) == false) {
+    final BlocCentral _blocCentral = BlocCentral();
+    String acceso = widget.securityAccessKey ?? '';
+    if (_blocCentral.ckeckPolicyAccsess(acceso) == false) {
       return Container(
         width: 1,
         height: 1,
       );
     }
 
-    double aspectRatio = 1 / 3.03;
+    double width = widget.buttonWidth ?? _blocCentral.size.width * 0.85;
+    double height = (width * aspectRatio).clamp(50, 130);
 
-    if (ancho == null) {
-      if (widget.anchoBoton != null) {
-        ancho = widget.anchoBoton;
-        anchoInicial = ancho;
-        alto = ancho! * aspectRatio;
-        if (alto! > 130.0) {
-          alto = 130.0;
-        }
-      } else {
-        ancho = BlocCentral().size.width * 0.85;
-        if (BlocCentral().displayModo == 2) {
-          ancho = BlocCentral().size.width * 0.5;
-        }
-        anchoInicial = ancho;
-        alto = ancho! * aspectRatio;
-      }
+    if (_blocCentral.displayModo == ModoDisplay.tablet) {
+      width = _blocCentral.size.width * 0.5;
     }
 
     Widget separador = SizedBox(
-      width: ancho! * 0.011988012,
+      width: width * 0.011988012,
     );
 
     return FadeInLeft(
@@ -74,80 +67,82 @@ class _FatButtonJocaaguraState extends State<FatButtonJocaagura> {
       child: AnimatedContainer(
         duration: Duration(milliseconds: 1500),
         curve: Curves.bounceOut,
-        width: ancho,
-        margin: EdgeInsets.all(ancho! * 0.01),
+        width: width,
+        margin: EdgeInsets.all(width * 0.01),
         child: InkWell(
           onTap: () {
-            if (widget.rutaSonido != null) {
+            if (widget.soundAssetsRoute != null) {
               /// todo: complete audio functions
             }
             setState(() {
-              double anchoTmp = MediaQuery.of(context).size.width * 0.9;
-              if (ancho! * 1.2 < anchoTmp) {
-                anchoTmp = ancho! * 1.2;
+              double tmpWidth = _blocCentral.size.width * 0.9;
+              if (width * 1.2 < tmpWidth) {
+                tmpWidth = width * 1.2;
               }
-              ancho == anchoInicial ? ancho = anchoTmp : ancho = anchoInicial;
+              if (width != tmpWidth) {
+                width = tmpWidth;
+              } else {
+                width = widget.buttonWidth ?? _blocCentral.size.width * 0.85;
+              }
             });
             widget.onTap();
           },
           child: Stack(
             children: <Widget>[
-              _BotonGordoBackground(
-                color1: widget.color1 ?? Theme.of(context).primaryColor,
-                color2: widget.color2 ?? Theme.of(context).accentColor,
-                icono: widget.icono,
-                alto: alto,
-                ancho: ancho,
+              _FatButtonBackground(
+                color1: widget.primaryColor ?? _blocCentral.theme.primaryColor,
+                color2: widget.accentColor ?? _blocCentral.theme.accentColor,
+                icono: widget.icon ?? Icons.warning,
+                alto: height,
+                ancho: width,
               ),
               Container(
-                width: ancho,
-                height: alto,
+                width: width,
+                height: height,
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Container(
-                        width: ancho! * 0.070887446,
+                      SizedBox(
+                        width: width * 0.070887446,
                       ),
                       Container(
-                        width: ancho! * 0.165834166,
-                        child: Center(
-                          child: FaIcon(
-                            widget.icono,
-                            color: Theme.of(context).accentColor,
-                            size: ancho! * 0.13,
-                          ),
+                        width: width * 0.165834166,
+                        alignment: Alignment.center,
+                        child: FaIcon(
+                          widget.icon,
+                          color: _blocCentral.theme.accentColor,
+                          size: width * 0.13,
                         ),
                       ),
                       separador,
                       Container(
                         alignment: Alignment.centerLeft,
-                        width: ancho! * 0.4998335,
-                        height: ancho! * 0.13482351,
+                        width: width * 0.4998335,
+                        height: width * 0.13482351,
                         child: AutoSizeText(
-                          widget.texto!,
-                          wrapWords: false,
-                          // Para NO partir las palabras en 2
+                          widget.label ?? 'I am FatButton',
+                          wrapWords: true,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           minFontSize: 7.0,
                           maxFontSize: 40.0,
                           style: TextStyle(
-                              color: Theme.of(context).buttonColor,
+                              color: _blocCentral.theme.buttonColor,
                               fontSize: 40.0,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
                       separador,
                       Container(
-                        width: ancho! * 0.165834166,
+                        width: width * 0.165834166,
                         alignment: Alignment.center,
                         child: FaIcon(
                           FontAwesomeIcons.chevronRight,
-                          color: Theme.of(context).canvasColor,
-                          size: ancho! * 0.075,
+                          color: _blocCentral.theme.canvasColor,
+                          size: width * 0.075,
                         ),
                       ),
                     ],
@@ -162,14 +157,14 @@ class _FatButtonJocaaguraState extends State<FatButtonJocaagura> {
   }
 }
 
-class _BotonGordoBackground extends StatelessWidget {
+class _FatButtonBackground extends StatelessWidget {
   final Color color1;
   final Color color2;
-  final IconData? icono;
-  final double? alto;
-  final double? ancho;
+  final IconData icono;
+  final double alto;
+  final double ancho;
 
-  const _BotonGordoBackground(
+  const _FatButtonBackground(
       {required this.color1,
       required this.color2,
       required this.icono,
@@ -178,7 +173,8 @@ class _BotonGordoBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double radio = ancho! * 0.036764706;
+    final double radio = ancho * 0.036764706;
+    final BlocCentral _blocCentral = BlocCentral();
 
     return Container(
       width: ancho,
@@ -200,15 +196,15 @@ class _BotonGordoBackground extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Positioned(
-              left: ancho! * 0.7738333333,
-              bottom: ancho! * 0.1285,
+              left: ancho * 0.7738333333,
+              bottom: ancho * 0.1285,
               child: Container(
-                width: ancho! * 0.312,
-                height: ancho! * 0.251,
+                width: ancho * 0.312,
+                height: ancho * 0.251,
                 child: FaIcon(
                   icono,
-                  size: ancho! * 0.25,
-                  color: Theme.of(context).canvasColor.withOpacity(0.25),
+                  size: ancho * 0.25,
+                  color: _blocCentral.theme.canvasColor.withOpacity(0.25),
                 ),
               ),
             ),

@@ -1,3 +1,4 @@
+import 'package:contratame/enums.dart';
 import 'package:flutter/material.dart';
 
 import '../../blocs/bloc_central.dart';
@@ -5,15 +6,15 @@ import '../../blocs/bloc_provider.dart';
 import '../../widgets/app_bar_widget.dart';
 import '../../widgets/menu_app_bar_widget.dart';
 
-/// menu de la aplicación
+/// app menu
 class MenuAppProjector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Map<String, MenuAppBarItem>>(
         stream: BlocCentral().menuItemsStream,
         builder: (context, snapshot) {
-          if (BlocCentral().displayModo == 2 ||
-              BlocCentral().displayModo == 4) {
+          if (BlocCentral().displayModo == ModoDisplay.tablet ||
+              BlocCentral().displayModo == ModoDisplay.tv) {
             List<Widget> contenido = [];
 
             BlocCentral().menuItems.forEach((key, value) {
@@ -63,14 +64,9 @@ class MenuAppProjector extends StatelessWidget {
               ),
             );
           }
-
-          if (snapshot.data != null) {
-            if (BlocCentral().drawerMenu == true &&
-                BlocProvider().menuItems.entries.length > 0) {
-              return AppBarWidget(
-                menuAcciones: BlocProvider().menuItems,
-              );
-            }
+          if (BlocCentral().drawerMenu == true &&
+              BlocProvider().menuItems.entries.length > 0) {
+            return AppBarWidget();
           }
           return Container(
             width: 0.0,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../blocs/bloc_central.dart';
+import '../enums.dart';
 
 class MenuAppBarItem extends StatelessWidget {
   final Function funcion;
@@ -25,7 +26,8 @@ class MenuAppBarItem extends StatelessWidget {
     if (inicio2 < 800) {
       inicio2 = 800;
     }
-    if (BlocCentral().displayModo == 2 || BlocCentral().displayModo == 4) {
+    if (BlocCentral().displayModo == ModoDisplay.tablet ||
+        BlocCentral().displayModo == ModoDisplay.tv) {
       anchoMenu = BlocCentral().sizeDrawer * 0.96;
       alto = BlocCentral().size.height * 0.1;
 

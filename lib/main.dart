@@ -21,19 +21,13 @@ class MyApp extends StatelessWidget {
     return StreamBuilder<ThemeData>(
         stream: BlocCentral().streamTheme,
         builder: (context, snapshot) {
-          ThemeData themeData = ThemeData(
-            primarySwatch: Colors.purple,
-          );
-          if (snapshot.hasData) {
-            if (snapshot.data != null) {
-              themeData = snapshot.data!;
-            }
-          }
-
           return MaterialApp(
             title: 'Portfolio Albert J. Jiménez P.',
             debugShowCheckedModeBanner: false,
-            theme: themeData,
+            theme: snapshot.data ??
+                ThemeData(
+                  primarySwatch: Colors.purple,
+                ),
             home: LandingPage(),
           );
         });
