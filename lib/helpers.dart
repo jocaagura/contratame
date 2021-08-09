@@ -77,13 +77,13 @@ class Helpers {
   String capitalizationWords(String phrase) {
     Pattern pattern = r'(\S)+';
     RegExp regExp = RegExp(pattern as String, caseSensitive: false);
-    String textoC = phrase.splitMapJoin(regExp,
+    String text = phrase.splitMapJoin(regExp,
         onMatch: (m) {
-          String aCapitalizar = '${m.group(0)}'.substring(0, 1);
-          String aMinuscula = '${m.group(0)}'.substring(1);
-          return aCapitalizar.toUpperCase() + aMinuscula.toLowerCase();
+          String toUppercase = '${m.group(0)}'.substring(0, 1);
+          String toLowercase = '${m.group(0)}'.substring(1);
+          return toUppercase.toUpperCase() + toLowercase.toLowerCase();
         },
         onNonMatch: (n) => ' ');
-    return textoC.trim();
+    return text.trim();
   }
 }
