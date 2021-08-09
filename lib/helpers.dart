@@ -37,7 +37,7 @@ class Helpers {
 
   /// formating
   /// money format
-  /// Devolver formato moneda
+  /// Return a double number with money format to UI
   String returnMoneyFormat(String valor, [numberOfdecimalsDigits = 2]) {
     String moneda = "\$";
     String numero = "";
@@ -56,6 +56,7 @@ class Helpers {
       check++;
       numero = integer[i] + numero;
     }
+
     if (numberOfdecimalsDigits > 0) {
       return moneda +
           numero +
