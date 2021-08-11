@@ -262,8 +262,6 @@ class BlocProvider {
 
     removePage(historial.last);
     clearBottomMenu();
-    print(historial);
-    print(alert);
     return false;
   }
 

@@ -1,10 +1,10 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:contratame/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../blocs/bloc_central.dart';
+import '../enums.dart';
 
 class FatButtonJocaagura extends StatefulWidget {
   final IconData? icon;
@@ -50,8 +50,12 @@ class _FatButtonJocaaguraState extends State<FatButtonJocaagura> {
       );
     }
 
+    if (_blocCentral.displayModo == ModoDisplay.desktop) {
+      aspectRatio = 1 / 6.6666;
+    }
+
     double width = widget.buttonWidth ?? _blocCentral.size.width * 0.85;
-    double height = (width * aspectRatio).clamp(50, 130);
+    double height = (width * aspectRatio).clamp(50, 250);
 
     if (_blocCentral.displayModo == ModoDisplay.tablet) {
       width = _blocCentral.size.width * 0.5;

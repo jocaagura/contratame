@@ -70,7 +70,6 @@ class ServiceUserSharedPreferences {
 
   Future<List<String>> getListStringValue(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print(prefs.getStringList(key));
     final tmp = <String>[];
     return prefs.getStringList(key) ?? tmp;
   }

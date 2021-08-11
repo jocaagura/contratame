@@ -93,7 +93,7 @@ class BlocCentral {
 
   double get sizeDrawer => BlocTheme().sizeDrawer;
 
-  set size(Size? sizeTmp) {
+  set size(Size sizeTmp) {
     BlocTheme().size = sizeTmp;
   }
 

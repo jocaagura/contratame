@@ -21,15 +21,18 @@ class AlertWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double ancho = MediaQuery.of(context).size.width * 0.9;
-    final double alto = MediaQuery.of(context).size.height * 0.7;
+    final _blocCentral = BlocCentral();
+
+
+    final double ancho = _blocCentral.size.width * 0.9;
+    final double alto = _blocCentral.size.height * 0.7;
 
     return Stack(
       children: [
         Container(
           color: Colors.black.withOpacity(0.8),
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          width: _blocCentral.size.width,
+          height: _blocCentral.size.height,
         ),
 
         /// Background
@@ -37,8 +40,8 @@ class AlertWidget extends StatelessWidget {
           duration: Duration(milliseconds: 750),
           child: Container(
             margin: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width * 0.05,
-                top: MediaQuery.of(context).size.height * 0.15),
+                left: _blocCentral.size.width * 0.05,
+                top: _blocCentral.size.height * 0.15),
             width: ancho,
             height: alto,
             decoration: BoxDecoration(

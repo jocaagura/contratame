@@ -7,9 +7,8 @@ class Helpers {
   static final Helpers _helpers = Helpers._internal();
 
   /// Factory prevents double instanciate for this Singleton Class
-  factory Helpers() {
-    return _helpers;
-  }
+  factory Helpers() => _helpers;
+
 
   Helpers._internal() {
     print('test made for Albert J. Jiménez P.');
@@ -39,8 +38,8 @@ class Helpers {
   /// money format
   /// Return a double number with money format to UI
   String returnMoneyFormat(String valor, [numberOfdecimalsDigits = 2]) {
-    String moneda = "\$";
-    String numero = "";
+    String moneySymbol = "\$";
+    String formattedNumber = "";
     double? tmp = double.tryParse(valor);
     if (tmp == null) {
       return '\$0';
@@ -49,21 +48,21 @@ class Helpers {
     int check = 0;
     for (int i = integer.length - 1; i >= 0; i--) {
       if (check != 0 && check % 6 == 0) {
-        numero = "'" + numero;
+        formattedNumber = "'" + formattedNumber;
       } else if (check != 0 && check % 3 == 0) {
-        numero = "." + numero;
+        formattedNumber = "." + formattedNumber;
       }
       check++;
-      numero = integer[i] + numero;
+      formattedNumber = integer[i] + formattedNumber;
     }
 
     if (numberOfdecimalsDigits > 0) {
-      return moneda +
-          numero +
+      return moneySymbol +
+          formattedNumber +
           ',' +
           tmp.toStringAsFixed(numberOfdecimalsDigits).split('.')[1];
     }
-    return moneda + numero;
+    return moneySymbol + formattedNumber;
   }
 
   /// Icon data

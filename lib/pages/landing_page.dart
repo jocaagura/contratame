@@ -31,7 +31,7 @@ class LandingPage extends StatelessWidget {
                   return LandscapeTabletDisplayPage();
                 case ModoDisplay.desktop:
                   return PortraitDesktopDisplayPage();
-                case ModoDisplay.desktop:
+                case ModoDisplay.tv:
                   return PortraitTvDisplayPage();
                 default:
                   return PortraitMovilDisplayPage();

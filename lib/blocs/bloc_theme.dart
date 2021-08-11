@@ -11,9 +11,7 @@ class BlocTheme {
   /// Singleton pattern
   static final BlocTheme _blocTheme = BlocTheme._internal();
 
-  factory BlocTheme() {
-    return _blocTheme;
-  }
+  factory BlocTheme() => _blocTheme;
 
   BlocTheme._internal() {
     /// All of initial checks will be written here and
@@ -39,7 +37,7 @@ class BlocTheme {
 
   final _themeController = BehaviorSubject<ThemeData>();
   final _themeControllerTmp = BehaviorSubject<MaterialColor?>();
-  final _sizeController = BehaviorSubject<Size?>();
+  final _sizeController = BehaviorSubject<Size>();
 
   /// Default material color
   final int _primaryColorHexValue = 4284508017;
@@ -71,7 +69,16 @@ class BlocTheme {
   });
 
   Size? sizeControl;
-  double sizeDrawer = 100.0;
+  double get sizeDrawer => _sizeDrawer();
+
+  double _sizeDrawer(){
+    double tmp = 100.0;
+    if(modoDisplay == ModoDisplay.desktop){
+      tmp = (size.width * 0.3).clamp(0, 300);
+    }
+    return tmp;
+  }
+
   ModoDisplay modoDisplay = ModoDisplay.movil;
 
   /// setters and getters
@@ -84,45 +91,23 @@ class BlocTheme {
     _themeControllerTmp.sink.add(themeTmp);
   }
 
-  set size(Size? sizeTmp) {
+  set size(Size sizeTmp) {
     /// Set the size of app only if is different
-    if (sizeTmp != sizeControl && sizeTmp != null && sizeControl != null) {
-      sizeControl = sizeTmp;
-
-      /// limit drawer size
-      final double limiteDrawer = 250;
-      sizeDrawer = 100.0;
-      modoDisplay = ModoDisplay.movil;
-      if (sizeTmp.width > 500) {
-        /// Constraint for size.with
-        sizeDrawer = sizeTmp.width - 600;
-        if (sizeDrawer > 300) {
-          sizeDrawer = 300;
-        }
-        sizeTmp = Size(sizeTmp.width - sizeDrawer, sizeTmp.height);
-        if (sizeDrawer > limiteDrawer) {
-          modoDisplay = ModoDisplay.tablet;
-        } else if (sizeControl!.aspectRatio > 0.65 ||
-            sizeControl!.aspectRatio < 0.5) {
-          modoDisplay = ModoDisplay.desktop;
-        }
-      }
-
-      /// Para tv y pantalla grande
-      if (sizeTmp.width > 1900) {
+    if(size.width != sizeTmp.width || size.width == 1){
+      if(480 < sizeTmp.width && sizeTmp.width < 800){
+        modoDisplay = ModoDisplay.tablet;
+      }else if(800 < sizeTmp.width && sizeTmp.width < 1900){
+        modoDisplay = ModoDisplay.desktop;
+      }else if(sizeTmp.width >= 1900){
         modoDisplay = ModoDisplay.tv;
+      }else{
+        modoDisplay = ModoDisplay.movil;
       }
-      if (modoDisplay == ModoDisplay.movil) {
-        sizeTmp = sizeControl;
-      }
-      sizeControl = sizeTmp;
-
-      /// Evitamos la construccion innecesaria de widgets
       _sizeController.sink.add(sizeTmp);
     }
   }
 
-  Size get size => _sizeController.valueOrNull ?? Size(480.0, 853.3);
+  Size get size => _sizeController.valueOrNull ?? Size(1,1);
 
   ThemeData get theme => _themeController.value;
 

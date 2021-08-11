@@ -8,10 +8,7 @@ void main() {
 
     test('load theme', (){
         expect(BlocTheme().defaultMaterialColor is MaterialColor, true);
-        print(BlocTheme().size);
         expect(BlocTheme().size is Size == true, true);
     });
-
-
 
 }
